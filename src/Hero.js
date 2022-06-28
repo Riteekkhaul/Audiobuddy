@@ -1,31 +1,39 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState , useEffect , useContext} from 'react';
 import './styles/Hero.css';
 import Tesseract from 'tesseract.js';
 import Modal from './Modal';
 import axios from 'axios';
 import Header from './Components/Header';
+import {useNavigate} from 'react-router-dom';
+import { TextContext } from './Context/TextContext';
 
 const Hero = () => {
 
+  const { Text , setText } =useContext(TextContext);
   const [userLoggedin , setUserLoggedin] = useState(false);
-  const [userId, setId] = useState('');
-  const [ activities , setActivities] =useState([1, 2, 3]);
+  const [id, setId] = useState('');
+  const [ activities , setActivities] =useState([]);
+  const [postModal, setpostModal] = useState(true);
+  const navigate=useNavigate();
   useEffect(async() => {
     if(localStorage.getItem('NewUser')){
       setUserLoggedin(true);
+      console.log(localStorage.getItem("NewUser"));
       setId(JSON.parse(localStorage.getItem('NewUser')).result._id);
     }else{
       setUserLoggedin(false);
     }
 
     if(userLoggedin){
-   await axios.get(`http://localhost:8000/api/v1/activity/${userId}`).then(res =>{
-      console.log("Fetching your Activities..." , res.data[0]);
-      setActivities(res.data[0].post);
+   await axios.get(`http://localhost:8000/api/v1/activity/${id}`).then(res =>{
+      console.log("Fetching your Activities..." , res);
+      setActivities(res.data);
+      setText("");
     }).catch(err =>{console.log(err)})
     }
 
-  }, [ userLoggedin]);
+  }, [ userLoggedin, id]);
+
 
 
   var speech = new window.SpeechSynthesisUtterance();
@@ -36,11 +44,11 @@ const Hero = () => {
   speech.voice = voices[1];
   const [progress, setProgress] = useState(0);
   const [image, setImage] = useState('');
-  const [Text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [pitch, setpitch] = useState(1);
   const [rate, setrate] = useState(1);
   const [volume, setvolume] = useState(1);
+
   
   const handleClick = () => {
 
@@ -67,8 +75,8 @@ const Hero = () => {
               "Content-Type": "application/json",
             },
           };
-          console.log(Text);
-          axios.post(`http://localhost:8000/api/v1/activity/${userId}`,Text,config).then(res =>{
+          const post = Text;
+          axios.post(`http://localhost:8000/api/v1/activity/${id}`,post,config).then(res =>{
           console.log("Activity Saved successfully.." , res);
         }).catch(err =>{console.log(err)})
         }
@@ -79,7 +87,9 @@ const Hero = () => {
     speech.text = Text;
     console.log("playing...")
     window.speechSynthesis.speak(speech);
-  }
+
+
+}
 
  const femaleVoice1 =()=>{
   speech.voice = voices[2];
@@ -138,9 +148,16 @@ function handlePitch(e){
   speech.pitch = pitch;
 };
 
+ const tryanother=()=>{
+   setText("");
+   setImage("");
+ }
 
-
-
+ const Translate=()=>{
+  
+  
+  navigate('/translate');
+ }
   return (
     <>
       {
@@ -191,8 +208,8 @@ function handlePitch(e){
                 { userLoggedin? (
                 <>
                  <h4>Your Recent Activities</h4>
-                 { activities.map((e, i) => {
-                  return (   <p key={i}  > {e.name}</p>  ) })}
+                 { activities.map((act, i) => {
+                  return (   <p key={i} className="post" >{act.post}</p>  ) })}
                  </> 
                  ):(
                  <>
@@ -215,6 +232,8 @@ function handlePitch(e){
               <div className='text-hero-left'>
                 <h4>Your extracted text is here 👇</h4>
                 <textarea>{Text}</textarea>
+                <button className='tryother' onClick={tryanother} >Try Another</button>
+                <button className='tryother2' onClick={Translate} >Translate</button>
               </div>
               <div className='text-hero-right'>
                 <h5>Select The Voice </h5>

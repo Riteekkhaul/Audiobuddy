@@ -33,6 +33,17 @@ const Navbar = () => {
   const Home=()=>{
      navigate('/');      
   }
+  
+  const Help=()=>{
+      navigate('/help');      
+   }
+
+   const Services=()=>{
+      navigate('/services');      
+   }
+   const About=()=>{
+      navigate('/about');      
+   }
 
   const handleProfile =()=>{
         console.log("called");
@@ -49,9 +60,9 @@ const Navbar = () => {
                         </div>
                         <div className='nav-right'>
                               <ul>
-                                 <li>Services</li>
-                                 <li>About</li>
-                                 <li >Help</li>
+                                 <li onClick={Services}>Services</li>
+                                 <li onClick={About}>About</li>
+                                 <li onClick={Help} >Help</li>
                              {
                                    notLoggedin?(
                                          <>

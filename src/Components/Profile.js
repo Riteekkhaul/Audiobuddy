@@ -13,7 +13,7 @@ const [newpassword, setnewpassword] = useState('');
 const [updated, setupdated] = useState(false);
 
   useEffect(() => {
-    const id = JSON.parse(localStorage.getItem('NewUser')).result;
+    const id = JSON.parse(localStorage.getItem('NewUser')).result._id;
     const getUser = async()=>{
       await axios.get(`http://localhost:8000/api/v1/user/${id}`).then(res =>{
       console.log("Getting user info..." , res.data);

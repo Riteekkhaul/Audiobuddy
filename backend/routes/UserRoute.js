@@ -34,8 +34,8 @@ router.post('/login',async(req,res)=>{
         console.log("reached here", result);
         if(result){
             if(result.password == password){
-                var result = result._id;
-                res.status(200).send({messege: "login success..!", result});
+                var result = result;
+                res.status(200).send({messege: "login success..!",result});
             }else{
                 res.status(401).json({messege:"Sorry...Invalid Credentials!"});   
             }

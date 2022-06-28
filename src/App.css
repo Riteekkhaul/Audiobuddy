@@ -57,3 +57,10 @@
 .copy{
       padding-top: 20px;
 }
+#temp{
+      background-image: url("/public/temp.jpg");
+      height: 100vh;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+}

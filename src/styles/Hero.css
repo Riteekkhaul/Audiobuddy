@@ -25,22 +25,16 @@ margin-top: 50px;
       background-color: #fff;
       overflow: scroll;
 }
-
-.hero-right p{
-  text-overflow: ellipsis;
-}
 .upload{
       margin-left: 35px;
       margin-top: 45px;
 }
 .camera {
-
       margin-top: 45px;
 }
 .pdf{
       margin-top: 45px;
 }
-
 .hero-left .upload p{
       width: 150px;
       height: 150px;
@@ -62,7 +56,6 @@ margin-top: 50px;
       font-size: 22px;
       cursor: pointer;
 }
-
 .upload  button{
   width: 100px;
   height: 40px;
@@ -110,10 +103,9 @@ margin-top: 50px;
       padding-left: 50px;
       padding-top: 10px;
 }
-.hero-right p{
+.post{
 color: black;
 width: 80%;
-height: 30px;
 background-color: gray;
 color: yellow;
 border-radius: 10px;
@@ -121,6 +113,10 @@ margin: auto;
 margin-top: 10px;
 text-align: center;
 cursor: pointer;
+white-space: wrap; 
+overflow: hidden;
+text-overflow: ellipsis; 
+height: 50px;
 }
 
 .file{
@@ -170,6 +166,36 @@ cursor: pointer;
             border: none;
             height: 100%;
       }
+     .tryother{
+           position: absolute;
+           width: auto;
+           height: 40px;
+           border-radius: 5px;
+           background-color: rgb(175, 33, 175);
+           color: white;
+           padding: 5px 10px;
+           margin-top: 10px;
+           margin-left: 10px;
+           border: 1px solid gray;
+           font-size: 18px;
+           font-weight: 600px;
+     }
+
+     .tryother2{
+      position: absolute;
+      width: auto;
+      height: 40px;
+      border-radius: 5px;
+      background-color: rgb(175, 33, 175);
+      color: white;
+      padding: 5px 10px;
+      margin-top: 10px;
+      margin-left:40%;
+      border: 1px solid gray;
+      font-size: 18px;
+      font-weight: 600px;
+}
+
       .text-hero-right h5{
         text-align: center;
         color: black;

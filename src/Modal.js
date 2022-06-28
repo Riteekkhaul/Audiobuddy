@@ -13,7 +13,7 @@ const Timepass = ({progress}) => {
               <progress value={progress} max="100">
                 {progress}%{' '}
               </progress>{' '}
-              <p >Converting:- {progress} %</p>
+              <p >Processing:- {progress} %</p>
             </>
       </div>
     </div>

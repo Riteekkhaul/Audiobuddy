@@ -3,7 +3,6 @@ const router = express.Router();
 const Activity = require("../models/Activity");
 
 
-
 router.get('/:id',async(req ,res)=>{
     try{
     
@@ -13,7 +12,6 @@ router.get('/:id',async(req ,res)=>{
     res.status(400).json({messege:"something went wrong at server side.."});
    }
 })
-
 
 router.post('/:id',async(req,res)=>{
     try{
