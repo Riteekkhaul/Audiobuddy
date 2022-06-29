@@ -27,6 +27,12 @@ try{
 app.use('/api/v1/user',UserRoute);
 app.use('/api/v1/activity',ActivityRoute);
 
-app.listen(process.env.Port,()=>{
-      console.log("server is running at 8000");
+const  port = process.env.Port || 8000;
+
+if(process.env.NODE_ENV == "production"){
+      app.use(express.static("client/build"));
+}
+
+app.listen(port,()=>{
+      console.log(`server is running at ${port}`);
 })
