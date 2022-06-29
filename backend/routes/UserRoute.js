@@ -1,7 +1,7 @@
 const express = require('express');
-const { find } = require('../models/UserModal');
 const router = express.Router();
 const User = require('../models/UserModal');
+const bcrypt  =require('bcryptjs');
 
 router.get('/:id',async(req ,res)=>{
       try{
@@ -15,8 +15,14 @@ router.get('/:id',async(req ,res)=>{
 
 router.post('/register',async(req,res)=>{
   try{
-      console.log("data recieved from body",req.body);
-      const result = await User(req.body);
+
+       const salt =await bcrypt.genSalt(10);
+       const secpass = await bcrypt.hash(req.body.password,salt);
+       const result = await User({
+        name:req.body.name,
+        email:req.body.email,
+        password:secpass
+      });
       result.save();
       console.log("Sign-Up success!");
       res.status(201).send(result);
@@ -28,13 +34,11 @@ router.post('/register',async(req,res)=>{
 
 router.post('/login',async(req,res)=>{
     try{
-        console.log("data recieved from body",req.body);
+        
         const { email , password } = req.body;
         var result = await User.findOne({email});
-        console.log("reached here", result);
         if(result){
-            if(result.password == password){
-                var result = result;
+            if(await bcrypt.compare(password, result.password)){
                 res.status(200).send({messege: "login success..!",result});
             }else{
                 res.status(401).json({messege:"Sorry...Invalid Credentials!"});   
