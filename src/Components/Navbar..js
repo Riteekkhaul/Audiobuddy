@@ -1,10 +1,11 @@
-import React,{ useState , useEffect} from 'react';
+import React,{ useState , useEffect ,useContext} from 'react';
 import '../styles/Navbar.css';
 import { useNavigate } from 'react-router-dom';
-
+import { ActivityContext} from '../Context/ActivityContext';
 
 const Navbar = () => {
 
+      const { activities , setActivities } =useContext(ActivityContext);
 
       useEffect(() => {
          if(localStorage.getItem('NewUser')){
@@ -27,6 +28,7 @@ const Navbar = () => {
       localStorage.clear();
       alert("Logged Out Successfully!")
       setNotLoggedin(true);
+      setActivities([]);
       navigate('/');
   }
 

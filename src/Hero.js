@@ -6,13 +6,14 @@ import axios from 'axios';
 import Header from './Components/Header';
 import {useNavigate} from 'react-router-dom';
 import { TextContext } from './Context/TextContext';
+import { ActivityContext } from './Context/ActivityContext';
 
 const Hero = () => {
 
   const { Text , setText } =useContext(TextContext);
+  const { activities , setActivities } =useContext(ActivityContext);
   const [userLoggedin , setUserLoggedin] = useState(false);
   const [id, setId] = useState('');
-  const [ activities , setActivities] =useState([]);
   const [postModal, setpostModal] = useState(true);
   const navigate=useNavigate();
   useEffect(async() => {
@@ -70,15 +71,19 @@ const Hero = () => {
         setIsLoading(false);
         console.log(Text);
         if(userLoggedin){
-          const config = {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          };
-          const post = Text;
-          axios.post(`http://localhost:8000/api/v1/activity/${id}`,post,config).then(res =>{
-          console.log("Activity Saved successfully.." , res);
-        }).catch(err =>{console.log(err)})
+          try{
+            const config = {
+              headers: {
+                "Content-Type": "application/json",
+                      },
+                   };
+            const post = Text;
+            axios.post(`http://localhost:8000/api/v1/activity/${id}`,post,config).then(res =>{
+            console.log("Activity Saved successfully.." , res);
+          }).catch(err =>{console.log(err)})
+          } catch(err){
+            console.log(err);
+          }
         }
       });
   }
@@ -87,8 +92,6 @@ const Hero = () => {
     speech.text = Text;
     console.log("playing...")
     window.speechSynthesis.speak(speech);
-
-
 }
 
  const femaleVoice1 =()=>{
@@ -170,7 +173,7 @@ function handlePitch(e){
 
                   {
                     image ? (
-                      <label for='input-file' className='gol' >
+                      <label htmlFor='input-file' className='gol' >
                         File Uploaded
                         <input type='file' className='file' id='input-file' onChange={(e) =>
                           setImage(URL.createObjectURL(e.target.files[0]))
@@ -178,7 +181,7 @@ function handlePitch(e){
 
                       </label>
                     ) : (
-                      <label for='input-file' className='gol' >
+                      <label htmlFor='input-file' className='gol' >
                         Upload Image Here
                         <input type='file' className='file' id='input-file' onChange={(e) =>
                           setImage(URL.createObjectURL(e.target.files[0]))
@@ -190,14 +193,14 @@ function handlePitch(e){
                   <button className='btn' onClick={handleClick} >Convert</button>
                 </div>
                 <div className='pdf'>
-                  <label for='input-file' className='gol' >
+                  <label htmlFor='input-file' className='gol' >
                     Upload Pdf Here
                     <input type='file' className='file' id='input-file' />
                   </label>
                   <button className='btn'  >Convert</button>
                 </div>
                 <div className='camera'>
-                  <label for='input-file' className='gol' >
+                  <label htmlFor='input-file' className='gol' >
                     Capture Image
                     <input type='file' className='file' id='input-file' />
                   </label>
